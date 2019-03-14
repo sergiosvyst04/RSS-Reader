@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Header.qml</file>
+        <file>RssModelView.qml</file>
+        <file>TitlesMenu.qml</file>
+        <file>ArticleText.qml</file>
+    </qresource>
+</RCC>
