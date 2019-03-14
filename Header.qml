@@ -22,7 +22,7 @@ ToolBar {
             anchors.left: listViewButton.right
             anchors.rightMargin: 15
             border.width: 1
-            border.color: "black"
+            border.color: "red"
             radius: 8
             height: toolBar.height - 2
             width: 400
