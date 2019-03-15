@@ -17,6 +17,7 @@ public:
     using ErrorHandler = std::function<void(int, const QString&)>;
 
 public:
+    RequestSender(QObject *parent = nullptr);
     RequestSender(QNetworkAccessManager *networkManager, const QString &path,  QObject *parent = nullptr);
     void makeGetRequest(const QString& path, const QVariantMap& params, ErrorHandler errorHandler, Responsehandler responseHandler, int retryAtemts = 0);
 

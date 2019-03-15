@@ -9,7 +9,7 @@ RssModel::RssModel(QObject *parent)
     requestsender = new RequestSender();
     qDebug() << "call in constructor";
 
-    connect(requestsender, &RequestSender::filled, this, &RssModel::fillItemList );
+//    connect(requestsender, &RequestSender::filled, this, &RssModel::fillItemList );
 
 }
 
@@ -28,16 +28,17 @@ QVariant RssModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     Item item = _itemList.at(index.row());
+    int i = 0;
 
-    switch (role) {
-    case DescriptionRole:
-        return item.description();
-        break;
-    case TitleRole:
-        return item.title();
-    default:
-        break;
-    }
+//    switch (role) {
+//    case DescriptionRole:
+//        return item.description();
+//        break;
+//    case TitleRole:
+//        return item.title();
+//    default:
+//        break;
+//    }
 }
 
 //==============================================================================
@@ -77,26 +78,26 @@ void RssModel::fillItemList()
 {
 //    beginResetModel();
 //    endResetModel();
-    QStringList titles = requestsender->returnTitlesList();
-    QStringList descriptions = requestsender->returnDescriptionsList();
+//    QStringList titles = requestsender->returnTitlesList();
+//    QStringList descriptions = requestsender->returnDescriptionsList();
 
-    qDebug() << "fill from " << requestsender->returnUrl();
+//    qDebug() << "fill from " << requestsender->returnUrl();
 
-    Item item;
+//    Item item;
 
-    int j = 2;
-    for(int i = 0; i < titles.size(); i++)
-    {
-        item.setTitle(titles.at(j));
-        item.setDescription(descriptions.at(i));
+//    int j = 2;
+//    for(int i = 0; i < titles.size(); i++)
+//    {
+//        item.setTitle(titles.at(j));
+//        item.setDescription(descriptions.at(i));
 
-        beginInsertRows(QModelIndex(), rowCount(QModelIndex()), rowCount(QModelIndex()));
-        _itemList.append(item);
-        endInsertRows();
-        j++;
-        if(j == descriptions.size() - 2)
-            break;
-    }
+//        beginInsertRows(QModelIndex(), rowCount(QModelIndex()), rowCount(QModelIndex()));
+//        _itemList.append(item);
+//        endInsertRows();
+//        j++;
+//        if(j == descriptions.size() - 2)
+//            break;
+//    }
 
-    qDebug() << "count of Items : " << _itemList.size();
+//    qDebug() << "count of Items : " << _itemList.size();
 }

@@ -18,7 +18,9 @@ SOURCES += \
         main.cpp \
     RssModel.cpp \
     Item.cpp \
-    RequestSender.cpp
+    RequestSender.cpp \
+    RSSHttpClient.cpp \
+    AbstractRSSHttpClient.cpp
 
 RESOURCES += qml.qrc
 
@@ -36,4 +38,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     RssModel.hpp \
     Item.hpp \
-    RequestSender.hpp
+    RequestSender.hpp \
+    RSSHttpClient.hpp \
+    AbstractRSSHttpClient.hpp
