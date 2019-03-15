@@ -5,9 +5,9 @@ import Request 1.0
 ToolBar {
     id: toolBar
 
-//    RequestSender{
-//        id:requestSender
-//    }
+    RequestSender{
+        id:requestSender
+    }
 
     ToolButton{
         id: listViewButton

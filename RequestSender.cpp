@@ -8,11 +8,11 @@
 #include <QDomDocument>
 
 
-//RequestSender::RequestSender(QObject *parent)
-//    : QObject(parent)
-//{
-//    startRequest(urlName);
-//}
+RequestSender::RequestSender(QObject *parent)
+    : QObject(parent)
+{
+
+}
 
 RequestSender::RequestSender(QNetworkAccessManager *networkManager, const QString &path, QObject *parent)
     : QObject(parent),
@@ -43,7 +43,7 @@ void RequestSender::proccesRequest(RequestMaker requestMaker, ErrorHandler error
 {
     auto reply = requestMaker();
     connect(reply, &QNetworkReply::finished, this, [=](){
-        if(reply.error == QNetworkReply::OperationCanceledError && retryAtempts > 0)
+        if(reply->error() == QNetworkReply::OperationCanceledError && retryAtempts > 0)
         {
             qDebug() << "Retrying request, attempts : " << retryAtempts;
             proccesRequest(requestMaker, errorHandler, responseHandler, retryAtempts - 1);
@@ -60,7 +60,7 @@ void RequestSender::proccesRequest(RequestMaker requestMaker, ErrorHandler error
 void RequestSender::proccesResponse(QNetworkReply *reply, Responsehandler responseHandler,
                                      ErrorHandler errorHandler)
 {
-    if(reply->error == QNetworkReply::NoError)
+    if(reply->error() == QNetworkReply::NoError)
     {
         QByteArray response = reply->readAll();
         responseHandler(response);
