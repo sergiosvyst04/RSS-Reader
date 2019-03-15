@@ -28,6 +28,7 @@ QVariant RssModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     Item item = _itemList.at(index.row());
+    int i = 0;
 
 //    switch (role) {
 //    case DescriptionRole:
