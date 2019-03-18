@@ -2,6 +2,8 @@
 #define ABSTRACTRSSHTTPCLIENT_HPP
 
 #include <QObject>
+#include <Item.hpp>
+//#include <QUrl>
 
 class AbstractRSSHttpClient : public QObject
 {
@@ -9,17 +11,16 @@ class AbstractRSSHttpClient : public QObject
 public:
     explicit AbstractRSSHttpClient(QObject *parent = nullptr);
     virtual ~AbstractRSSHttpClient();
-    virtual void getTransactionsForAddress(QString address, size_t limit, QString order, unsigned assetID, QString lastSeenTxid) = 0;
+    virtual void getContent(QUrl url) = 0;
 
     struct Error{
-        int errorCode;
+        //        int errorCode;
         QString errorString;
     };
 
 signals:
-    void getTransactionsForAddressFinished(QString address, unsigned assetID, QByteArray response);
-    void getTransactionsForAddressFailed(QString address, Error error);
-
+    void getContentFinished(QList<Item> &list);
+    void getContentFailed(QString error);
 public slots:
 };
 

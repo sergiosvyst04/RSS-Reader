@@ -28,7 +28,6 @@ QVariant RssModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     Item item = _itemList.at(index.row());
-    int i = 0;
 
 //    switch (role) {
 //    case DescriptionRole:
@@ -74,8 +73,8 @@ QHash <int, QByteArray> RssModel::roleNames() const
 
 //==============================================================================
 
-void RssModel::fillItemList()
-{
+//void RssModel::fillItemList()
+//{
 //    beginResetModel();
 //    endResetModel();
 //    QStringList titles = requestsender->returnTitlesList();
@@ -100,4 +99,4 @@ void RssModel::fillItemList()
 //    }
 
 //    qDebug() << "count of Items : " << _itemList.size();
-}
+//}

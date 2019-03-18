@@ -15,6 +15,11 @@ void Item::setTitle(QString title)
     _title = title;
 }
 
+Item::Item()
+{
+
+}
+
 //QString Item::description()
 //{
 //    return _description;

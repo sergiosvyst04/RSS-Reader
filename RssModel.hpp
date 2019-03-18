@@ -3,6 +3,7 @@
 
 #include <QAbstractListModel>
 #include <Item.hpp>
+#include <AbstractRSSHttpClient.hpp>
 #include <RequestSender.hpp>
 
 class RssModel : public QAbstractListModel
@@ -30,7 +31,8 @@ public:
 
     QHash<int, QByteArray> roleNames() const;
 
-    void fillItemList();
+//    void fillItemList();
+    void fetch(QUrl url);
 
 private:
     QList<Item> _itemList;

@@ -6,6 +6,7 @@ class Item
 {
 public:
     Item(const QString im, const QString tit);
+    Item();
 
     void setTitle(QString title);
     void setDescription(QString description);

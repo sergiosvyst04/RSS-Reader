@@ -11,31 +11,17 @@ RSSHttpClient::RSSHttpClient(std::unique_ptr<RequestSender> &&requestSender, QOb
 }
 //==============================================================================
 
-void RSSHttpClient::getTransactionsForAddress(QString address, size_t limit, QString order, unsigned assetID, QString lastSeenTxid)
+void RSSHttpClient::getContent(QUrl url)
 {
-    Q_ASSERT (!address.isEmpty());
-
-    auto errorHandler = [this, address] (int errorCode, QString errorString) {
-        emit getTransactionsForAddressFailed(address, Error{errorCode, errorString});
+//    QList<Item> list;
+    auto errorHandler = [this, url] (QString errorString){
+        emit getContentFailed(errorString);
     };
 
-    auto responseHandler = [this, assetID, address] (const QByteArray &response) {
-        emit getTransactionsForAddressFinished(address, assetID, response);
+    auto responseHandler = [this] (QList<Item> &list) {
+        emit getContentFinished(list);
     };
 
-    QVariantMap params = {
-        {"limit", QString::number(limit)},
-        {"order", order}
-    };
-
-    if(!lastSeenTxid.isEmpty())
-    {
-        params.insert("lastSeenTxid", lastSeenTxid);
-    }
-
-    const QString url = QString("/v2/addresses/%1/transactions").arg(QString(QUrl::toPercentEncoding(address)));
-
-
-    _requestSender->makeGetRequest(url, params, errorHandler, responseHandler);
+    _requestSender->makeGetRequest(url, errorHandler, responseHandler);
 }
 

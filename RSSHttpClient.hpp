@@ -13,11 +13,10 @@ class RSSHttpClient : public AbstractRSSHttpClient
 public:
     explicit RSSHttpClient(std::unique_ptr<RequestSender> &&requestSender ,QObject *parent = nullptr);
 
-
 signals:
 
 public slots:
-    void getTransactionsForAddress(QString address, size_t limit, QString order, unsigned assetID, QString lastSeenTxid = QString()) override;
+   void getContent(QUrl url) override;
 
 private:
     std::unique_ptr<RequestSender> _requestSender;

@@ -16,18 +16,18 @@ RequestSender::RequestSender(QObject *parent)
 
 RequestSender::RequestSender(QNetworkAccessManager *networkManager, const QString &path, QObject *parent)
     : QObject(parent),
-      _networkAccessManager(networkManager),
-      _basePath(path)
+      _networkAccessManager(networkManager)
+//      _basePath(path)
 {
 
 }
 
 //==============================================================================
 
-void RequestSender::makeGetRequest(const QString &path, const QVariantMap &params, ErrorHandler errorHandler,
+void RequestSender::makeGetRequest(QUrl &url, ErrorHandler errorHandler,
                                    Responsehandler responseHandler, int retryAtemts)
 {
-    QNetworkRequest request(buildUrl(path, params));
+    QNetworkRequest request(url);
 
     RequestMaker requestMaker = [this, request](){
         return _networkAccessManager->get(request);
@@ -58,32 +58,50 @@ void RequestSender::proccesRequest(RequestMaker requestMaker, ErrorHandler error
 //==============================================================================
 
 void RequestSender::proccesResponse(QNetworkReply *reply, Responsehandler responseHandler,
-                                     ErrorHandler errorHandler)
+                                    ErrorHandler errorHandler)
 {
     if(reply->error() == QNetworkReply::NoError)
     {
-        QByteArray response = reply->readAll();
+        QDomDocument doc;
+        doc.setContent(reply->readAll());
+
+        QList<Item> response;
+        Item item;
+
+        auto elements = doc.elementsByTagName("title");
+        auto elements2  = doc.elementsByTagName("description");
+
+        for(int i = 0; i < elements.size(); i++)
+        {
+            QString title = elements.at(i).toElement().text();
+            QString description = elements2.at(i).toElement().text();
+
+            item.setDescription(description);
+            item.setTitle(title);
+
+            response.append(item);
+        }
         responseHandler(response);
     }
     else{
         int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
         qDebug() << "HTTP error : " << statusCode;
-        errorHandler(statusCode, reply->errorString());
+        errorHandler(reply->errorString());
     }
 }
 
 //==============================================================================
 
-QUrl RequestSender::buildUrl(const QString &path, const QVariantMap &params){
-    QUrl url(QString("%1%2").arg(_basePath).arg(path));
+//QUrl RequestSender::buildUrl(const QString &path){
+//    QUrl url(QString("%1%2").arg(_basePath).arg(path));
 
-    QUrlQuery query;
+//    QUrlQuery query;
 
-    for(auto it : params.toStdMap())
-    {
-        query.addQueryItem(it.first, QUrl::toPercentEncoding(it.second.toString()));
-    }
+//    for(auto it : params.toStdMap())
+//    {
+//        query.addQueryItem(it.first, QUrl::toPercentEncoding(it.second.toString()));
+//    }
 
-    url.setQuery(query);
-    return url;
-}
+//    url.setQuery(query);
+//    return url;
+//}
