@@ -14,16 +14,13 @@ class RequestSender : public QObject
     Q_OBJECT
 public:
     using RequestMaker  = std::function<QNetworkReply*()>;
-//    using Responsehandler = std::function<void(QByteArray&)>;
-    using Responsehandler = std::function<void(QList<Item> &list)>;
+    using Responsehandler = std::function<void(QByteArray&)>;
     using ErrorHandler = std::function<void( const QString&)>;
 
 public:
     RequestSender(QObject *parent = nullptr);
     RequestSender(QNetworkAccessManager *networkManager, const QString &path,  QObject *parent = nullptr);
     void makeGetRequest(QUrl &url, ErrorHandler errorHandler, Responsehandler responseHandler, int retryAtemts = 0);
-
-
 
 private slots:
     void proccesResponse(QNetworkReply* reply, Responsehandler responseHandler, ErrorHandler errorHandler);

@@ -12,11 +12,12 @@ class RSSHttpClient : public AbstractRSSHttpClient
     Q_OBJECT
 public:
     explicit RSSHttpClient(std::unique_ptr<RequestSender> &&requestSender ,QObject *parent = nullptr);
+    QList<Item> rssParser(const QByteArray &response);
 
 signals:
 
 public slots:
-   void getContent(QUrl url) override;
+    void getContent(QUrl url) override;
 
 private:
     std::unique_ptr<RequestSender> _requestSender;

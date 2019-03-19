@@ -17,7 +17,7 @@ RequestSender::RequestSender(QObject *parent)
 RequestSender::RequestSender(QNetworkAccessManager *networkManager, const QString &path, QObject *parent)
     : QObject(parent),
       _networkAccessManager(networkManager)
-//      _basePath(path)
+    //      _basePath(path)
 {
 
 }
@@ -62,25 +62,7 @@ void RequestSender::proccesResponse(QNetworkReply *reply, Responsehandler respon
 {
     if(reply->error() == QNetworkReply::NoError)
     {
-        QDomDocument doc;
-        doc.setContent(reply->readAll());
-
-        QList<Item> response;
-        Item item;
-
-        auto elements = doc.elementsByTagName("title");
-        auto elements2  = doc.elementsByTagName("description");
-
-        for(int i = 0; i < elements.size(); i++)
-        {
-            QString title = elements.at(i).toElement().text();
-            QString description = elements2.at(i).toElement().text();
-
-            item.setDescription(description);
-            item.setTitle(title);
-
-            response.append(item);
-        }
+        QByteArray response = reply->readAll();
         responseHandler(response);
     }
     else{
@@ -91,17 +73,3 @@ void RequestSender::proccesResponse(QNetworkReply *reply, Responsehandler respon
 }
 
 //==============================================================================
-
-//QUrl RequestSender::buildUrl(const QString &path){
-//    QUrl url(QString("%1%2").arg(_basePath).arg(path));
-
-//    QUrlQuery query;
-
-//    for(auto it : params.toStdMap())
-//    {
-//        query.addQueryItem(it.first, QUrl::toPercentEncoding(it.second.toString()));
-//    }
-
-//    url.setQuery(query);
-//    return url;
-//}
