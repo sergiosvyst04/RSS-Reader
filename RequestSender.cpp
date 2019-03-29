@@ -29,6 +29,8 @@ void RequestSender::makeGetRequest(QUrl &url, ErrorHandler errorHandler,
 {
     QNetworkRequest request(url);
 
+    _networkAccessManager = new QNetworkAccessManager();
+
     RequestMaker requestMaker = [this, request](){
         return _networkAccessManager->get(request);
     };

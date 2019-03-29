@@ -15,11 +15,9 @@ ApplicationWindow {
 
     header: Header {
        id: header
+       rss: titlesMenu.rssModelfromTitlesMenu
     }
 
-    RssModelView {
-        id:listViewRect
-    }
 
     TitlesMenu{
         id: titlesMenu

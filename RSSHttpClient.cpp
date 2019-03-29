@@ -29,12 +29,14 @@ void RSSHttpClient::getContent(QUrl url)
 
 QList<Item> RSSHttpClient::rssParser(const QByteArray &response)
 {
-    QDomDocument doc;
+
+    static QDomDocument doc;
     doc.setContent(response);
     QList<Item> list;
 
-    auto titles = doc.elementsByTagName("title");
+    auto titles = doc.elementsByTagName(QStringLiteral("title"));
     auto descriptions = doc.elementsByTagName("description");
+
 
     Item item;
 
@@ -48,6 +50,7 @@ QList<Item> RSSHttpClient::rssParser(const QByteArray &response)
 
         list.append(item);
     }
+
     return list;
 }
 

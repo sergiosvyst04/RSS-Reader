@@ -5,13 +5,13 @@
 class Item
 {
 public:
-    Item(const QString im, const QString tit);
+    Item(QString im,QString tit);
     Item();
 
     void setTitle(QString title);
     void setDescription(QString description);
-    const QString title();
-    const QString description();
+    QString title();
+    QString description();
 
 private:
     QString _title;

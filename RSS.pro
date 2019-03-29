@@ -20,7 +20,8 @@ SOURCES += \
     Item.cpp \
     RequestSender.cpp \
     RSSHttpClient.cpp \
-    AbstractRSSHttpClient.cpp
+    AbstractRSSHttpClient.cpp \
+    ApplicationViewModel.cpp
 
 RESOURCES += qml.qrc
 
@@ -40,4 +41,5 @@ HEADERS += \
     Item.hpp \
     RequestSender.hpp \
     RSSHttpClient.hpp \
-    AbstractRSSHttpClient.hpp
+    AbstractRSSHttpClient.hpp \
+    ApplicationViewModel.hpp

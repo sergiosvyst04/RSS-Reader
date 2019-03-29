@@ -1,10 +1,14 @@
-#ifndef RSSMODEL_HPP
+﻿#ifndef RSSMODEL_HPP
 #define RSSMODEL_HPP
 
 #include <QAbstractListModel>
 #include <Item.hpp>
 #include <AbstractRSSHttpClient.hpp>
 #include <RequestSender.hpp>
+#include <QPointer>
+#include <memory>
+#include <ApplicationViewModel.hpp>
+#include <RSSHttpClient.hpp>
 
 class RssModel : public QAbstractListModel
 {
@@ -31,12 +35,14 @@ public:
 
     QHash<int, QByteArray> roleNames() const;
 
-//    void fillItemList();
-    void fetch(QUrl url);
+public slots:
+    void initialize(ApplicationViewModel *applicationViewModel);
+    void fillItemList (QList<Item> &list);
+    void setUrl (const QString &urlStr);
 
 private:
     QList<Item> _itemList;
-    RequestSender *requestsender = nullptr;
+    AbstractRSSHttpClient* _abstractHttpClient = nullptr;
 };
 
 #endif // RSSMODEL_HPP

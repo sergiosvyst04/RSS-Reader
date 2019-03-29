@@ -20,13 +20,13 @@ Item::Item()
 
 }
 
-//QString Item::description()
-//{
-//    return _description;
-//}
+QString Item::description()
+{
+    return _description;
+}
 
 
-//QString Item::title()
-//{
-//    return _title;
-//}
+QString Item::title()
+{
+    return _title;
+}

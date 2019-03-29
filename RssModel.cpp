@@ -6,10 +6,6 @@
 RssModel::RssModel(QObject *parent)
     : QAbstractListModel(parent)
 {
-    requestsender = new RequestSender();
-    qDebug() << "call in constructor";
-
-//    connect(requestsender, &RequestSender::filled, this, &RssModel::fillItemList );
 
 }
 
@@ -29,15 +25,17 @@ QVariant RssModel::data(const QModelIndex &index, int role) const
 
     Item item = _itemList.at(index.row());
 
-//    switch (role) {
-//    case DescriptionRole:
-//        return item.description();
-//        break;
-//    case TitleRole:
-//        return item.title();
-//    default:
-//        break;
-//    }
+    switch (role) {
+    case DescriptionRole:
+        return item.description();
+        break;
+    case TitleRole:
+        return item.title();
+        break;
+    default:
+        break;
+    }
+
 }
 
 //==============================================================================
@@ -73,30 +71,25 @@ QHash <int, QByteArray> RssModel::roleNames() const
 
 //==============================================================================
 
-//void RssModel::fillItemList()
-//{
-//    beginResetModel();
-//    endResetModel();
-//    QStringList titles = requestsender->returnTitlesList();
-//    QStringList descriptions = requestsender->returnDescriptionsList();
+void RssModel::initialize(ApplicationViewModel *applicationViewModel)
+{
+    _abstractHttpClient = applicationViewModel->getAbstractHttpClient();
+}
 
-//    qDebug() << "fill from " << requestsender->returnUrl();
+//==============================================================================
 
-//    Item item;
+void RssModel::fillItemList(QList<Item> &list)
+{
+    beginResetModel();
+    _itemList = list;
+    endResetModel();
+    qDebug() << "_itemList.size() = " << _itemList.size();
+}
 
-//    int j = 2;
-//    for(int i = 0; i < titles.size(); i++)
-//    {
-//        item.setTitle(titles.at(j));
-//        item.setDescription(descriptions.at(i));
+//==============================================================================
 
-//        beginInsertRows(QModelIndex(), rowCount(QModelIndex()), rowCount(QModelIndex()));
-//        _itemList.append(item);
-//        endInsertRows();
-//        j++;
-//        if(j == descriptions.size() - 2)
-//            break;
-//    }
-
-//    qDebug() << "count of Items : " << _itemList.size();
-//}
+void RssModel::setUrl(const QString &urlStr)
+{
+    _abstractHttpClient->getContent(QUrl(urlStr));
+    connect(_abstractHttpClient, &AbstractRSSHttpClient::getContentFinished, this, &RssModel::fillItemList);
+}

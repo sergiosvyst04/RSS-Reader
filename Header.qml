@@ -1,9 +1,13 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.5
 import Request 1.0
+import Rss 1.0
+import ApplicationVM 1.0
 
 ToolBar {
     id: toolBar
+
+    property RssModel rss
 
     RequestSender{
         id:requestSender
@@ -14,7 +18,7 @@ ToolBar {
 
         icon.name: "document-download"
         onClicked: {
-            requestSender.setUrl(urlInput.text)
+            rss.setUrl(urlInput.text)
         }
 
         Rectangle{

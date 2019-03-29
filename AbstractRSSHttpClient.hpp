@@ -21,6 +21,7 @@ public:
 signals:
     void getContentFinished(QList<Item> &list);
     void getContentFailed(QString error);
+
 public slots:
 };
 
